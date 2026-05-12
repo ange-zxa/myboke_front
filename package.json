@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "npx tsx scripts/generate-posts-json.ts && next build",
+    "build:cloudflare": "npm run build && opennextjs-cloudflare build",
     "dev": "next dev",
     "start": "next start",
     "lint": "eslint",
