@@ -1,20 +1,41 @@
-import { searchPosts } from "@/lib/posts";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Post } from "@/lib/types";
 import PostList from "@/components/PostList";
 import SearchBar from "@/components/SearchBar";
 import Link from "next/link";
-import type { Metadata } from "next";
 
-interface Props {
-  searchParams: Promise<{ q?: string }>;
+function searchPostsLocally(posts: Post[], query: string): Post[] {
+  const q = query.toLowerCase();
+  return posts.filter(
+    (p) =>
+      p.title.toLowerCase().includes(q) ||
+      p.excerpt.toLowerCase().includes(q) ||
+      p.tags.some((t) => t.toLowerCase().includes(q))
+  );
 }
 
-export const metadata: Metadata = {
-  title: "搜索 - My Blog",
-};
+export default function SearchPage() {
+  const [q, setQ] = useState("");
+  const [results, setResults] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
-export default async function SearchPage({ searchParams }: Props) {
-  const { q } = await searchParams;
-  const results = q ? searchPosts(q) : [];
+  useEffect(() => {
+    fetch("/posts.json")
+      .then((r) => r.json())
+      .then(setPosts)
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get("q") || "";
+    setQ(query);
+    if (query && posts.length > 0) {
+      setResults(searchPostsLocally(posts, query));
+    }
+  }, [posts]);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
