@@ -18,6 +18,8 @@
 
 # production
 /build
+/out
+/public/posts.json
 
 # misc
 .DS_Store

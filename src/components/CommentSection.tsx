@@ -25,26 +25,28 @@ export default function CommentSection({ postSlug }: Props) {
   }, [fetchComments]);
 
   return (
-    <div className="space-y-6">
-      <h3 className="text-lg font-semibold text-gray-900">
+    <div>
+      <h3 className="text-sm font-medium text-gray-900 mb-6">
         评论 ({comments.length})
       </h3>
 
-      <CommentForm postSlug={postSlug} onCommentAdded={fetchComments} />
+      <div className="mb-8">
+        <CommentForm postSlug={postSlug} onCommentAdded={fetchComments} />
+      </div>
 
       {loading ? (
-        <p className="text-sm text-gray-400">加载中...</p>
+        <p className="text-xs text-gray-300">加载中...</p>
       ) : comments.length === 0 ? (
-        <p className="text-sm text-gray-400">暂无评论，来抢沙发吧</p>
+        <p className="text-xs text-gray-300">暂无评论</p>
       ) : (
         <div className="space-y-4">
           {comments.map((comment) => (
-            <div key={comment.id} className="border-b border-gray-100 pb-4">
+            <div key={comment.id}>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-sm font-medium text-gray-900">
                   {comment.author}
                 </span>
-                <span className="text-xs text-gray-400">
+                <span className="text-xs text-gray-300">
                   {new Date(comment.createdAt).toLocaleDateString("zh-CN")}
                 </span>
               </div>

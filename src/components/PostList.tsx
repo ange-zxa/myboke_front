@@ -8,14 +8,14 @@ interface Props {
 export default function PostList({ posts }: Props) {
   if (posts.length === 0) {
     return (
-      <div className="text-center py-16 text-gray-400">
-        <p className="text-lg">暂无文章</p>
+      <div className="py-20 text-center text-sm text-gray-400">
+        暂无文章
       </div>
     );
   }
 
   return (
-    <div className="grid gap-5 md:grid-cols-2">
+    <div className="divide-y divide-gray-100">
       {posts.map((post) => (
         <PostCard key={post.slug} post={post} />
       ))}

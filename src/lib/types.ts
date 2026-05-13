@@ -2,10 +2,15 @@ export interface Post {
   slug: string;
   title: string;
   date: string;
-  tags: string[];
   category: string;
+  subcategory?: string;
   excerpt: string;
   content: string;
+}
+
+export interface Category {
+  name: string;
+  subcategories: string[];
 }
 
 export interface Comment {

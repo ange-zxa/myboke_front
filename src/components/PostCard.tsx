@@ -1,5 +1,4 @@
 import Link from "next/link";
-import TagBadge from "./TagBadge";
 import { Post } from "@/lib/types";
 
 interface Props {
@@ -8,23 +7,19 @@ interface Props {
 
 export default function PostCard({ post }: Props) {
   return (
-    <article className="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow bg-white">
-      <div className="flex items-center gap-2 text-xs text-gray-400 mb-2">
-        <span>{post.date}</span>
-        <span>·</span>
-        <span>{post.category}</span>
-      </div>
-      <Link href={`/posts/${post.slug}`}>
-        <h2 className="text-lg font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
-          {post.title}
-        </h2>
+    <article>
+      <Link href={`/posts/${post.slug}`} className="group block py-3">
+        <div className="flex items-baseline gap-4">
+          <time className="text-xs text-gray-400 flex-shrink-0 tabular-nums min-w-[5rem]">
+            {post.date}
+          </time>
+          <div className="min-w-0">
+            <h2 className="text-sm font-medium text-gray-900 group-hover:text-gray-500 transition-colors truncate">
+              {post.title}
+            </h2>
+          </div>
+        </div>
       </Link>
-      <p className="text-sm text-gray-500 mb-3 line-clamp-2">{post.excerpt}</p>
-      <div className="flex flex-wrap gap-1.5">
-        {post.tags.map((tag) => (
-          <TagBadge key={tag} name={tag} />
-        ))}
-      </div>
     </article>
   );
 }

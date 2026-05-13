@@ -50,29 +50,29 @@ export default function CommentForm({ postSlug, onCommentAdded }: Props) {
           type="text"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
-          placeholder="昵称 *"
-          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="昵称"
+          className="flex-1 px-0 py-1.5 border-b border-gray-200 text-sm bg-transparent focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300"
         />
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="邮箱 (选填)"
-          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 px-0 py-1.5 border-b border-gray-200 text-sm bg-transparent focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300"
         />
       </div>
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="写下你的评论..."
-        rows={4}
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+        rows={3}
+        className="w-full px-0 py-1.5 border-b border-gray-200 text-sm bg-transparent focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300 resize-y"
       />
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {error && <p className="text-red-400 text-xs">{error}</p>}
       <button
         type="submit"
         disabled={submitting}
-        className="px-5 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+        className="text-sm text-gray-500 hover:text-gray-900 transition-colors disabled:opacity-30"
       >
         {submitting ? "提交中..." : "发表评论"}
       </button>
