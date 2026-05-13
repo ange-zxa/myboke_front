@@ -4,17 +4,11 @@
   "private": true,
   "scripts": {
     "build": "npx tsx scripts/generate-posts-json.ts && next build",
-    "build:cloudflare": "npm run build && opennextjs-cloudflare build",
     "dev": "next dev",
     "start": "next start",
-    "lint": "eslint",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "lint": "eslint"
   },
   "dependencies": {
-    "@opennextjs/cloudflare": "^1.19.9",
     "@tailwindcss/typography": "^0.5.19",
     "fuse.js": "^7.3.0",
     "gray-matter": "^4.0.3",
@@ -34,7 +28,6 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "wrangler": "^4.90.1"
+    "typescript": "^5"
   }
 }

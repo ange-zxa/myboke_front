@@ -22,7 +22,7 @@ export default function SearchPage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    fetch("/posts.json")
+    fetch("./posts.json")
       .then((r) => r.json())
       .then(setPosts)
       .catch(() => {});
