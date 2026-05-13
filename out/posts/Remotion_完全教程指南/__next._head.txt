@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[97367,["/myboke_front/_next/static/chunks/13h-0fd.p-1ga.js","/myboke_front/_next/static/chunks/0d3shmwh5_nmn.js"],"ViewportBoundary"]
+3:I[97367,["/myboke_front/_next/static/chunks/13h-0fd.p-1ga.js","/myboke_front/_next/static/chunks/0d3shmwh5_nmn.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+5:I[27201,["/myboke_front/_next/static/chunks/13h-0fd.p-1ga.js","/myboke_front/_next/static/chunks/0d3shmwh5_nmn.js"],"IconMark"]
+0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Remotion_完全教程指南 - My Blog"}],["$","meta","1",{"name":"description","content":" Remotion 完全教程指南\n\n> 用 React 写代码来生成视频 —— 从 0 基础入门到 AI 驱动的高级工作流\n>\n> 基于 Remotion 官方文档（2026 版）及社区最佳实践整理\n\n---\n\n 目录\n\n1. [什么是 Remotion](1-什么是-remotio"}],["$","link","2",{"rel":"icon","href":"/myboke_front/favicon.ico?favicon.0x3dzn~oxb6tn.ico","sizes":"256x256","type":"image/x-icon"}],["$","$L5","3",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"lV53CvqLn92rq3Y9LHWfq"}

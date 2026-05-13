@@ -1,0 +1,4 @@
+:HL["/myboke_front/_next/static/chunks/0v5aj3j29dza2.css","style"]
+:HL["/myboke_front/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/myboke_front/_next/static/media/caa3a2e1cccd8315-s.p.16t1db8_9y2o~.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"posts","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"Remotion_%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%E6%8C%87%E5%8D%97","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"lV53CvqLn92rq3Y9LHWfq"}
