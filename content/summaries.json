@@ -1,0 +1,7 @@
+{
+  "Next.js 16 新特性解读": "Next.js 16 正式发布，主要亮点包括Turbopack全面稳定化、Server Components优化及Partial Prerendering进入稳定阶段，同时引入了更直观的新缓存API。",
+  "Tailwind CSS 实战技巧": "本文总结了使用Tailwind CSS两年的实战经验，包括按“布局→尺寸→外观→交互”顺序组织类名、适度使用`@apply`、升级v4的CSS-first配置，以及利用`group-*`和`peer-*`实现无JS交互。",
+  "MongoDB 聚合管道入门": "MongoDB聚合管道将数据处理拆分为多个阶段，通过$match、$group、$lookup等操作实现类似SQL的功能，注意阶段顺序可提升性能，$facet能在一个查询中完成多维度聚合。",
+  "Spring Boot 项目结构最佳实践": "按功能模块分包、使用`@ControllerAdvice`统一异常处理、以及构造器注入，是Spring Boot项目结构的最佳实践。",
+  "我的2026技术回顾": "2026年作者全面迁移至Next.js 16 App Router和Spring Boot 3.x虚拟线程，AI工具成为日常但强调“快速生成，仔细审查”，并计划坚持打理个人博客。"
+}

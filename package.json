@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "npx tsx scripts/generate-posts-json.ts && next build",
+    "build": "npx tsx scripts/generate-summaries.ts && npx tsx scripts/generate-posts-json.ts && next build",
+    "summaries": "npx tsx scripts/generate-summaries.ts",
     "dev": "next dev",
     "start": "next start",
     "lint": "eslint"

@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import CommentSection from "@/components/CommentSection";
+import BackLink from "@/components/BackLink";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -37,12 +38,7 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-8">
-      <Link
-        href={`/category/${encodeURIComponent(post.category)}`}
-        className="text-xs text-gray-400 hover:text-gray-600 transition-colors mb-6 inline-block"
-      >
-        &larr; 返回 {post.category}
-      </Link>
+      <BackLink category={post.category} />
 
       <article>
         <header className="mb-8">

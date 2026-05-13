@@ -47,9 +47,8 @@ function walkPosts(dir: string): { fullPath: string; category: string; subcatego
   return results;
 }
 
-function autoTitle(content: string, slug: string): string {
-  const match = content.match(/^#\s+(.+)$/m);
-  return match ? match[1].trim() : slug;
+function autoTitle(_content: string, slug: string): string {
+  return slug;
 }
 
 function autoDate(fullPath: string): string {
