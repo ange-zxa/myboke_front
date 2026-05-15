@@ -45,7 +45,7 @@ export default function SearchPage() {
     <div className="max-w-2xl mx-auto px-6 py-8">
       <Link
         href="/"
-        className="text-xs text-gray-400 hover:text-gray-600 transition-colors mb-6 inline-block"
+        className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors mb-6 inline-block"
       >
         &larr; 返回
       </Link>
@@ -62,7 +62,7 @@ export default function SearchPage() {
           <PostList posts={results} />
         </>
       ) : (
-        <p className="text-sm text-gray-300 text-center py-20">
+        <p className="text-sm text-gray-300 dark:text-gray-600 text-center py-20">
           输入关键词搜索文章
         </p>
       )}

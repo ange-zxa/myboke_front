@@ -23,7 +23,7 @@ export default function BackLink({ category }: Props) {
     <Link
       href={`/category/${encodeURIComponent(category)}`}
       onClick={handleClick}
-      className="text-xs text-gray-400 hover:text-gray-600 transition-colors mb-6 inline-block"
+      className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors mb-6 inline-block"
     >
       &larr; 返回
     </Link>

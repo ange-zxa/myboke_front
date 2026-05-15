@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浅色 IDE 预览</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #f6f8fa;
+    --sidebar-bg: #f0f2f5;
+    --text: #1f2328;
+    --text2: #656d76;
+    --muted: #8b949e;
+    --blue: #0550ae;
+    --teal: #0a7e7a;
+    --red: #cf222e;
+    --purple: #8250df;
+    --border: #d0d7de;
+    --card-hover: #eef1f5;
+    --line-number: #c8cdd4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+  }
+
+  /* 左侧编辑器装饰栏 */
+  .gutter {
+    width: 60px;
+    flex-shrink: 0;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 3rem 10px 0 0;
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 0.7rem;
+    color: var(--line-number);
+    line-height: 2.1;
+  }
+  .gutter span { display: block; }
+  .gutter .active { color: var(--blue); }
+
+  /* 主内容区 */
+  .main {
+    flex: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    position: relative;
+  }
+
+  /* 文件标签栏 */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.78rem;
+    color: var(--text2);
+    border-bottom: 2px solid transparent;
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  }
+  .tab.active {
+    color: var(--text);
+    border-bottom-color: var(--blue);
+  }
+
+  /* 面包屑 */
+  .breadcrumb {
+    padding: 0.8rem 0;
+    font-size: 0.75rem;
+    color: var(--text2);
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  }
+  .breadcrumb .keyword { color: var(--blue); }
+  .breadcrumb .string { color: var(--teal); }
+
+  /* 头像 + 名字 */
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+    padding: 1.2rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .avatar {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 2px solid var(--purple);
+    background: #f3e8ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 1rem;
+    color: var(--purple);
+    font-weight: 600;
+  }
+  .name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .name .type-annotation { color: var(--muted); font-weight: 400; font-size: 0.8rem; }
+  .bio { font-size: 0.8rem; color: var(--text2); margin-top: 2px; }
+
+  /* 搜索 */
+  .search-wrap {
+    margin-bottom: 1.5rem;
+  }
+  .search-box {
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-box:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(5,80,174,0.1);
+  }
+  .search-box::placeholder { color: var(--muted); }
+
+  /* 分类标签 */
+  .cats {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .cats button {
+    background: none; border: none;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.82rem;
+    color: var(--text2);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+  }
+  .cats button:hover { color: var(--text); background: var(--card-hover); }
+  .cats button.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+  /* 文章列表 */
+  .post-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    padding: 0.7rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.12s;
+    margin: 0 -0.8rem;
+  }
+  .post-item:hover { background: var(--card-hover); }
+  .post-date {
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    min-width: 5.5rem;
+  }
+  .post-title {
+    font-size: 0.9rem;
+    color: var(--text);
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  .post-item:hover .post-title { color: var(--blue); }
+
+  /* 标签小色块 */
+  .tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-right: 4px;
+  }
+  .tag.js { background: #fff3cd; color: #946a00; }
+  .tag.css { background: #e8f4fd; color: #0550ae; }
+  .tag.java { background: #ffebe9; color: #cf222e; }
+
+  /* 底部状态栏 */
+  .statusbar {
+    margin-top: 3rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .statusbar .blue { color: var(--blue); }
+  .statusbar .teal { color: var(--teal); }
+
+  @media (max-width: 760px) {
+    .gutter { display: none; }
+    .main { padding: 2rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 行号侧栏 -->
+<div class="gutter">
+  <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+  <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
+  <span class="active">17</span>
+  <span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
+</div>
+
+<div class="main">
+
+  <!-- 文件标签 -->
+  <div class="tab-bar">
+    <div class="tab active">📄 index.tsx</div>
+    <div class="tab">layout.tsx</div>
+    <div class="tab">globals.css</div>
+  </div>
+
+  <!-- 面包屑 -->
+  <div class="breadcrumb">
+    <span class="keyword">export</span> <span class="keyword">default function</span> <span class="string">HomePage</span>() {
+  </div>
+
+  <!-- 个人信息 -->
+  <div class="profile">
+    <div class="avatar">A</div>
+    <div>
+      <div class="name">
+        ange-zxa
+        <span class="type-annotation">: User</span>
+      </div>
+      <div class="bio">
+        <span class="keyword">const</span> bio = <span class="string">"全栈开发者，热爱技术与分享。"</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 搜索 -->
+  <div class="search-wrap">
+    <input class="search-box" type="text" placeholder="Search posts... (Ctrl+P)">
+  </div>
+
+  <!-- 分类 -->
+  <div class="cats">
+    <button class="active">All Posts</button>
+    <button>前端 <span class="tag js">3</span></button>
+    <button>后端 <span class="tag java">2</span></button>
+    <button>随笔 <span class="tag css">1</span></button>
+  </div>
+
+  <!-- 文章列表 -->
+  <div class="post-item">
+    <span class="post-date">2026-05-14</span>
+    <span class="post-title">Next.js 16 新特性解读</span>
+    <span class="tag js">.tsx</span>
+  </div>
+  <div class="post-item">
+    <span class="post-date">2026-05-10</span>
+    <span class="post-title">Tailwind CSS 实战技巧</span>
+    <span class="tag css">.css</span>
+  </div>
+  <div class="post-item">
+    <span class="post-date">2026-05-06</span>
+    <span class="post-title">MongoDB 聚合管道入门</span>
+    <span class="tag js">.js</span>
+  </div>
+  <div class="post-item">
+    <span class="post-date">2026-05-01</span>
+    <span class="post-title">Spring Boot 项目结构最佳实践</span>
+    <span class="tag java">.java</span>
+  </div>
+  <div class="post-item">
+    <span class="post-date">2026-04-28</span>
+    <span class="post-title">我的 2026 技术回顾</span>
+    <span class="tag" style="background:#f3e8ff;color:#8250df;">.md</span>
+  </div>
+
+  <!-- 状态栏 -->
+  <div class="statusbar">
+    <span><span class="blue">main</span> <span class="teal">✓</span> 5 posts</span>
+    <span>Ln <span class="blue">17</span>, Col <span class="blue">5</span></span>
+    <span>UTF-8 &nbsp; Markdown &nbsp; <span class="teal">Prettier</span></span>
+  </div>
+
+</div>
+
+</body>
+</html>

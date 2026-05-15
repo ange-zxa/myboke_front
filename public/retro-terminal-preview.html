@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>复古终端预览</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
+
+  :root {
+    --bg: #f5f2e8;
+    --text: #2c2c2c;
+    --text2: #5c5c5c;
+    --muted: #a0a090;
+    --accent: #1a7a2e;
+    --accent-dim: #2d8a40;
+    --border: #d5d0c5;
+    --card: #faf8f3;
+    --crt-line: rgba(0,0,0,0.03);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Serif SC', 'Courier New', monospace;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* CRT 扫描线 */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.015) 2px,
+      rgba(0,0,0,0.015) 4px
+    );
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 终端提示符区 */
+  .prompt-area {
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--card);
+    font-family: 'Courier New', monospace;
+    position: relative;
+  }
+  .prompt-area::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 28px;
+    background: #e8e5dc;
+    border-bottom: 1px solid var(--border);
+    border-radius: 4px 4px 0 0;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
+  .dots { display: flex; gap: 6px; padding-top: 8px; }
+  .dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .dots span:nth-child(1) { background: #c5c0b5; }
+  .dots span:nth-child(2) { background: #b5b0a5; }
+  .dots span:nth-child(3) { background: #a5a095; }
+
+  .prompt-content { padding-top: 24px; }
+  .prompt-line {
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+    line-height: 1.8;
+  }
+  .prompt-line .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 15px;
+    background: var(--accent);
+    animation: blink 1s step-end infinite;
+    vertical-align: -2px;
+    margin-left: 2px;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* 头像 + 名字 */
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px dashed var(--border);
+  }
+  .avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: #e0dcd0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    color: var(--accent);
+    font-weight: bold;
+  }
+  .name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    font-family: 'Courier New', monospace;
+  }
+  .name .accent { color: var(--accent); }
+  .bio { font-size: 0.8rem; color: var(--text2); margin-top: 2px; }
+
+  /* 搜索 */
+  .search-wrap {
+    margin-bottom: 2rem;
+  }
+  .search-box {
+    width: 100%;
+    padding: 0.5rem 0;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-box:focus { border-color: var(--accent); }
+  .search-box::placeholder { color: var(--muted); }
+
+  /* 分类标签 */
+  .cats {
+    display: flex;
+    gap: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 1.5rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+  }
+  .cats button {
+    background: none; border: none;
+    color: var(--muted); cursor: pointer;
+    font-family: inherit; font-size: inherit;
+    transition: color 0.2s;
+    padding: 0;
+  }
+  .cats button:hover { color: var(--accent); }
+  .cats button.active { color: var(--accent); }
+
+  /* 文章列表 */
+  .post-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .post-item:hover {
+    padding-left: 0.8rem;
+    border-left: 3px solid var(--accent);
+    margin-left: -0.8rem;
+  }
+  .post-date {
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    min-width: 5.5rem;
+  }
+  .post-title {
+    font-size: 0.95rem;
+    color: var(--text);
+    transition: color 0.2s;
+  }
+  .post-item:hover .post-title { color: var(--accent); }
+
+  /* 底部 */
+  .footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 2px dashed var(--border);
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .footer .accent { color: var(--accent); }
+
+  /* 侧边装饰 */
+  .side-decoration {
+    position: fixed;
+    left: max(2rem, calc((100vw - 720px) / 2 - 3rem));
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    opacity: 0.4;
+    line-height: 2;
+  }
+  .side-decoration.right {
+    left: auto;
+    right: max(2rem, calc((100vw - 720px) / 2 - 3rem));
+  }
+
+  @media (max-width: 840px) {
+    .side-decoration { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 侧边行号装饰 -->
+<div class="side-decoration">
+001&nbsp;&nbsp;$&nbsp;ls&nbsp;-la<br>
+002&nbsp;&nbsp;$&nbsp;cd&nbsp;~/posts<br>
+003&nbsp;&nbsp;$&nbsp;cat&nbsp;*.md<br>
+004&nbsp;&nbsp;$&nbsp;echo&nbsp;done<br>
+005&nbsp;&nbsp;$&nbsp;exit
+</div>
+<div class="side-decoration right">
+&gt;&gt;&nbsp;reading<br>
+&gt;&gt;&nbsp;writing<br>
+&gt;&gt;&nbsp;sharing<br>
+&gt;&gt;&nbsp;building<br>
+&gt;&gt;&nbsp;learning
+</div>
+
+<div class="container">
+
+  <!-- 终端窗口 -->
+  <div class="prompt-area">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="prompt-content">
+      <div class="prompt-line">$ whoami</div>
+      <div class="prompt-line" style="color:var(--text);">ange-zxa</div>
+      <div class="prompt-line" style="margin-top:0.5rem;">$ cat ~/.bio</div>
+      <div class="prompt-line" style="color:var(--text2);">全栈开发者，热爱技术与分享。</div>
+      <div class="prompt-line" style="margin-top:0.5rem;">$ <span class="cursor"></span></div>
+    </div>
+  </div>
+
+  <!-- 搜索 -->
+  <div class="search-wrap">
+    <input class="search-box" type="text" placeholder="$ grep -i "关键词" ~/posts/*.md">
+  </div>
+
+  <!-- 分类 -->
+  <div class="cats">
+    <button class="active">$ ls */</button>
+    <button>前端/</button>
+    <button>后端/</button>
+    <button>随笔/</button>
+  </div>
+
+  <!-- 文章列表 -->
+  <div class="post-item">
+    <span class="post-date">2026-05-14</span>
+    <span class="post-title">Next.js 16 新特性解读</span>
+  </div>
+  <div class="post-item">
+    <span class="post-date">2026-05-10</span>
+    <span class="post-title">Tailwind CSS 实战技巧</span>
+  </div>
+  <div class="post-item">
+    <span class="post-date">2026-05-06</span>
+    <span class="post-title">MongoDB 聚合管道入门</span>
+  </div>
+  <div class="post-item">
+    <span class="post-date">2026-05-01</span>
+    <span class="post-title">Spring Boot 项目结构最佳实践</span>
+  </div>
+  <div class="post-item">
+    <span class="post-date">2026-04-28</span>
+    <span class="post-title">我的 2026 技术回顾</span>
+  </div>
+
+  <div class="footer">
+    <span class="accent">$</span> echo "&copy; 2026 ange-zxa" <span class="accent">|</span> tee footer
+  </div>
+
+</div>
+
+</body>
+</html>

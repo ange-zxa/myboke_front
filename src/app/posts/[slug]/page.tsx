@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(slug);
   if (!post) return { title: "文章未找到" };
   return {
-    title: `${post.title} - ange-zxa`,
+    title: `${post.title} - 安歌`,
     description: post.excerpt,
   };
 }
@@ -47,7 +47,7 @@ export default async function PostPage({ params }: Props) {
             <span>·</span>
             <Link
               href={`/category/${encodeURIComponent(post.category)}`}
-              className="hover:text-gray-600 transition-colors"
+              className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
             >
               {post.category}
             </Link>
@@ -56,24 +56,24 @@ export default async function PostPage({ params }: Props) {
                 <span>·</span>
                 <Link
                   href={`/category/${encodeURIComponent(post.category)}/${encodeURIComponent(post.subcategory)}`}
-                  className="hover:text-gray-600 transition-colors"
+                  className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                 >
                   {post.subcategory}
                 </Link>
               </>
             )}
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-3">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">
             {post.title}
           </h1>
           {post.excerpt && (
-            <p className="text-sm text-gray-500 leading-relaxed mb-4 border-l-2 border-gray-200 pl-3">
+            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-4 border-l-2 border-gray-200 dark:border-gray-700 pl-3">
               {post.excerpt}
             </p>
           )}
         </header>
 
-        <div className="prose prose-gray max-w-none mb-12">
+        <div className="prose prose-gray dark:prose-invert max-w-none mb-12">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight]}
@@ -83,7 +83,7 @@ export default async function PostPage({ params }: Props) {
         </div>
       </article>
 
-      <hr className="border-gray-100 mb-8" />
+      <hr className="border-gray-100 dark:border-gray-800 mb-8" />
 
       <CommentSection postSlug={slug} />
     </div>

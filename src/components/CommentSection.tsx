@@ -26,7 +26,7 @@ export default function CommentSection({ postSlug }: Props) {
 
   return (
     <div>
-      <h3 className="text-sm font-medium text-gray-900 mb-6">
+      <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-6">
         评论 ({comments.length})
       </h3>
 
@@ -35,22 +35,22 @@ export default function CommentSection({ postSlug }: Props) {
       </div>
 
       {loading ? (
-        <p className="text-xs text-gray-300">加载中...</p>
+        <p className="text-xs text-gray-300 dark:text-gray-600">加载中...</p>
       ) : comments.length === 0 ? (
-        <p className="text-xs text-gray-300">暂无评论</p>
+        <p className="text-xs text-gray-300 dark:text-gray-600">暂无评论</p>
       ) : (
         <div className="space-y-4">
           {comments.map((comment) => (
             <div key={comment.id}>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-sm font-medium text-gray-900">
+                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   {comment.author}
                 </span>
-                <span className="text-xs text-gray-300">
+                <span className="text-xs text-gray-300 dark:text-gray-600">
                   {new Date(comment.createdAt).toLocaleDateString("zh-CN")}
                 </span>
               </div>
-              <p className="text-sm text-gray-600 whitespace-pre-wrap">
+              <p className="text-sm text-gray-600 dark:text-gray-400 whitespace-pre-wrap">
                 {comment.content}
               </p>
             </div>

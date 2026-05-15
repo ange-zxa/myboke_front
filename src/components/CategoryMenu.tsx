@@ -37,15 +37,15 @@ export default function CategoryMenu({ categories, currentCategory, onSearch }: 
   if (categories.length === 0) return null;
 
   return (
-    <div className="mb-8">
-      <div className="flex items-center gap-5 text-sm border-b border-gray-100 pb-2">
+    <div className="mb-6">
+      <div className="flex items-center gap-0 text-sm border-b border-[#d0d7de] dark:border-gray-800">
         <button
           onClick={() => {
             setSearchQuery("");
             if (onSearch) onSearch("");
             router.push("/");
           }}
-          className="text-gray-400 hover:text-gray-900 transition-colors"
+          className="px-3 py-2 -mb-[1px] border-b-2 border-transparent text-[#656d76] dark:text-gray-400 hover:text-[#1f2328] dark:hover:text-gray-200 transition-colors"
         >
           最新发布
         </button>
@@ -61,29 +61,30 @@ export default function CategoryMenu({ categories, currentCategory, onSearch }: 
                 router.push(`/category/${encodeURIComponent(cat.name)}`);
               }
             }}
-            className={`transition-colors ${
+            className={`px-3 py-2 -mb-[1px] border-b-2 transition-colors ${
               expanded === cat.name
-                ? "text-gray-900"
-                : "text-gray-400 hover:text-gray-900"
+                ? "border-[#0550ae] dark:border-emerald-400 text-[#1f2328] dark:text-gray-100"
+                : "border-transparent text-[#656d76] dark:text-gray-400 hover:text-[#1f2328] dark:hover:text-gray-200"
             }`}
           >
             {cat.name}
           </button>
         ))}
 
-        <form onSubmit={handleSearchSubmit} className="ml-auto flex items-center gap-2">
+        <form onSubmit={handleSearchSubmit} className="ml-auto relative">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={currentCategory ? `在 ${currentCategory} 中搜索...` : "搜索文章..."}
-            className="w-32 px-0 py-0.5 border-b border-gray-200 text-sm bg-transparent focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-300"
+            className="w-40 pl-2.5 pr-8 py-1.5 text-xs border border-[#d0d7de] dark:border-gray-700 rounded-md bg-white dark:bg-transparent focus:outline-none focus:border-[#0550ae] dark:focus:border-gray-400 focus:ring-2 focus:ring-[#0550ae]/10 dark:focus:ring-0 transition-colors placeholder:text-[#8b949e] dark:placeholder:text-gray-600"
           />
           <button
             type="submit"
-            className="text-gray-400 hover:text-gray-900 transition-colors flex-shrink-0"
+            className="absolute right-0 top-0 bottom-0 px-2 text-[#8b949e] dark:text-gray-500 hover:text-[#1f2328] dark:hover:text-gray-200 transition-colors"
+            aria-label="搜索"
           >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8" />
               <path d="M21 21l-4.35-4.35" />
             </svg>
@@ -92,7 +93,7 @@ export default function CategoryMenu({ categories, currentCategory, onSearch }: 
       </div>
 
       {expanded && (
-        <div className="flex items-center gap-4 mt-2 text-xs">
+        <div className="flex items-center gap-2 mt-2 px-3 text-xs">
           {categories
             .find((c) => c.name === expanded)
             ?.subcategories.map((sub) => (
@@ -103,7 +104,7 @@ export default function CategoryMenu({ categories, currentCategory, onSearch }: 
                     `/category/${encodeURIComponent(expanded)}/${encodeURIComponent(sub)}`
                   )
                 }
-                className="text-gray-400 hover:text-gray-700 transition-colors"
+                className="px-2 py-0.5 rounded-full border border-[#d0d7de] dark:border-gray-700 text-[#656d76] dark:text-gray-400 hover:bg-[#eef1f5] dark:hover:bg-gray-800 hover:text-[#1f2328] dark:hover:text-gray-200 transition-colors"
               >
                 {sub}
               </button>
@@ -112,7 +113,7 @@ export default function CategoryMenu({ categories, currentCategory, onSearch }: 
             onClick={() =>
               router.push(`/category/${encodeURIComponent(expanded)}`)
             }
-            className="text-gray-300 hover:text-gray-700 transition-colors"
+            className="text-[#8b949e] dark:text-gray-600 hover:text-[#1f2328] dark:hover:text-gray-300 transition-colors"
           >
             全部
           </button>

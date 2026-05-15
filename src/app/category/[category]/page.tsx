@@ -16,7 +16,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category } = await params;
   return {
-    title: `${decodeURIComponent(category)} - ange-zxa`,
+    title: `${decodeURIComponent(category)} - 安歌`,
     description: `查看分类 "${decodeURIComponent(category)}" 下的所有文章`,
   };
 }
@@ -31,12 +31,12 @@ export default async function CategoryPage({ params }: Props) {
     <div className="max-w-2xl mx-auto px-6 py-8">
       <Link
         href="/"
-        className="text-xs text-gray-400 hover:text-gray-600 transition-colors mb-6 inline-block"
+        className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors mb-6 inline-block"
       >
         &larr; 返回首页
       </Link>
 
-      <h1 className="text-lg font-semibold text-gray-900 mb-2">
+      <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
         {catName}
       </h1>
       <p className="text-sm text-gray-400 mb-4">

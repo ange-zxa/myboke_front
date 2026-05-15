@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>背景方案对比</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: system-ui, sans-serif; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    min-height: 100vh;
+  }
+  .card {
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: default;
+  }
+  .label {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: #78716c;
+    background: rgba(255,255,255,0.7);
+    padding: 4px 12px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  /* 1. 噪点纸纹 */
+  .bg-noise {
+    background-color: #faf8f5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
+  /* 2. 纯暖白 */
+  .bg-warm { background-color: #faf8f5; }
+
+  /* 3. 极淡竖直条纹 */
+  .bg-lines {
+    background-color: #faf8f5;
+    background-image: repeating-linear-gradient(90deg, transparent, transparent 60px, #ede8e1 60px, #ede8e1 61px);
+  }
+
+  /* 4. 淡网格 */
+  .bg-grid {
+    background-color: #faf8f5;
+    background-image:
+      linear-gradient(#ede8e1 1px, transparent 1px),
+      linear-gradient(90deg, #ede8e1 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* 5. 微渐变 */
+  .bg-soft {
+    background: linear-gradient(180deg, #fdfcfa 0%, #f6f2ed 50%, #faf8f5 100%);
+  }
+
+  /* 6. 对角渐变 */
+  .bg-diagonal {
+    background: linear-gradient(135deg, #faf8f5 0%, #f3efe9 40%, #faf8f5 70%, #f7f3ed 100%);
+  }
+
+  /* 7. 径向光晕 */
+  .bg-glow {
+    background-color: #faf8f5;
+    background-image: radial-gradient(ellipse at 50% 0%, #f0ebe2 0%, transparent 70%);
+  }
+
+  /* 8. 双层叠加 */
+  .bg-layers {
+    background-color: #faf8f5;
+    background-image:
+      radial-gradient(circle at 20% 80%, #f0ebe2 0%, transparent 40%),
+      radial-gradient(circle at 80% 20%, #f3eee8 0%, transparent 40%);
+  }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="card bg-noise"><span class="label">噪点纸纹 — 有质感的极简</span></div>
+  <div class="card bg-warm"><span class="label">纯暖白 — 干净的舒适</span></div>
+  <div class="card bg-lines"><span class="label">极淡竖纹 — 隐约的结构</span></div>
+  <div class="card bg-grid"><span class="label">淡网格 — 秩序感</span></div>
+  <div class="card bg-soft"><span class="label">微渐变 — 柔和的层次</span></div>
+  <div class="card bg-diagonal"><span class="label">对角渐变 — 微妙的方向</span></div>
+  <div class="card bg-glow"><span class="label">径向光晕 — 顶部微光</span></div>
+  <div class="card bg-layers"><span class="label">双层光斑 — 角落暖光</span></div>
+</div>
+</body>
+</html>
