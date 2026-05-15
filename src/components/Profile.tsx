@@ -1,14 +1,12 @@
 "use client";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-
 export default function Profile() {
   return (
     <div className="mb-8 p-5 bg-white dark:bg-transparent border border-[#d0d7de] dark:border-gray-800 rounded-lg">
       <div className="flex items-center gap-4 mb-3">
         <div className="relative w-12 h-12 rounded-full border-2 overflow-hidden border-[#8250df] bg-[#f3e8ff] flex-shrink-0 flex items-center justify-center text-[#8250df] dark:text-emerald-400 text-lg font-semibold dark:ring-2 dark:ring-emerald-500/30 dark:ring-offset-2 dark:ring-offset-[#0d1117] dark:border-emerald-500/40">
           <img
-            src={`${basePath}/images/avatar.jpg`}
+            src="/images/avatar.jpg"
             alt="头像"
             className="absolute inset-0 w-full h-full rounded-full object-cover"
             onError={(e) => {
